@@ -5,6 +5,7 @@ class HgRepo(override val cmd:String,
 
   def this(base:String) = this(HgManager.cmd,base)
 
+  
 
   override def toString = base
 }

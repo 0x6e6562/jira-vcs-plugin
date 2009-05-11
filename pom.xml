@@ -37,11 +37,19 @@
             <artifactId>lift-util</artifactId>
             <version>1.0</version>
         </dependency>
+
+        <!-- Testing -->
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.6</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.scalaforge</groupId>
+            <artifactId>scalax</artifactId>
+            <version>0.1</version>
         </dependency>
     </dependencies>
 

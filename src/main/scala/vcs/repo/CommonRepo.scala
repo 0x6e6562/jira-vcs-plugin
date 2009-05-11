@@ -10,4 +10,15 @@ abstract class CommonRepo(val cmd:String,
     IoHelpers.exec(cmd, "add", path)
   }
 
+
+  def commit(message: String) = {
+    IoHelpers.exec(cmd, "commit", "-R", base, "-m", message)    
+  }
+
+
+  def log = {
+    val output = IoHelpers.exec(cmd, "log", "-R", base)
+    // TODO There must be a cleaner way to get the output
+    output.productElement(0).asInstanceOf[String]
+  }
 }

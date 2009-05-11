@@ -6,8 +6,22 @@ package vcs.repo
 trait Repo {
 
   /**
+   * The base directory of the repository
+   */
+  val base:String
+
+  /**
    * Create a new repository in the given location
    */
   def add(path:String) : Unit
 
+  /**
+   * Commits the current working directory to the index
+   */
+  def commit(message:String) : Unit
+
+  /**
+   * Reads the log from the repo
+   */
+  def log : String
 }
