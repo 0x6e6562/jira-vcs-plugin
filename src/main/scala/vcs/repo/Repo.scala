@@ -23,5 +23,5 @@ trait Repo {
   /**
    * Reads the log from the repo
    */
-  def log : String
+  def log : List[LogEntry]
 }

@@ -16,9 +16,9 @@ abstract class CommonRepo(val cmd:String,
   }
 
 
-  def log = {
-    val output = IoHelpers.exec(cmd, "log", "-R", base)
-    // TODO There must be a cleaner way to get the output
-    output.productElement(0).asInstanceOf[String]
-  }
+//  def log = {
+//    val output = IoHelpers.exec(cmd, "log", "-R", base)
+//    // TODO There must be a cleaner way to get the output
+//    output.productElement(0).asInstanceOf[String]
+//  }
 }
