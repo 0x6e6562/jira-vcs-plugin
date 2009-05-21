@@ -2,7 +2,7 @@ package vcs.repo.hg
 
 
 
-import net.liftweb.util.IoHelpers
+import net.liftweb.util.{Box, IoHelpers}
 import util.parsing.combinator.JavaTokenParsers
 
 class HgRepo(override val cmd:String,
@@ -14,8 +14,12 @@ class HgRepo(override val cmd:String,
 
   override def toString = base
 
-  override def log = {
-    val output = IoHelpers.exec(cmd, "log", "--template", template, "-R", base)
+  override def log(changesets:String*) = {
+    val output = changesets.length match {
+      case 0 => IoHelpers.exec(cmd, "log", "--template", template, "-R", base)
+      case 1 => IoHelpers.exec(cmd, "log", "--template", template, "-R", base, "-r", changesets(0) + ":")
+      case 2 => IoHelpers.exec(cmd, "log", "--template", template, "-R", base, "-r", changesets(0) + ":" + changesets(1))
+    }
     // TODO There must be a cleaner way to get the output
     HgLogParser.parse(output.productElement(0).asInstanceOf[String])
   }

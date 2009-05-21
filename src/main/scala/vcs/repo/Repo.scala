@@ -23,5 +23,6 @@ trait Repo {
   /**
    * Reads the log from the repo
    */
-  def log : List[LogEntry]
+  def log(changesets:String*) : List[LogEntry]
+
 }
