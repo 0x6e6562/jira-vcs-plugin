@@ -19,7 +19,7 @@
     <packaging>atlassian-plugin</packaging>
 
     <properties>
-        <scala.version>2.7.2</scala.version>
+        <scala.version>2.7.5</scala.version>
         <atlassian.plugin.key>vcs.jira-vcs-plugin</atlassian.plugin.key>
         <atlassian.product.version>3.13.4</atlassian.product.version>
         <atlassian.product.test-lib.version>3.13.4</atlassian.product.test-lib.version>
@@ -30,7 +30,7 @@
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
-            <version>2.7.2</version>
+            <version>${scala.version}</version>
         </dependency>
         <dependency>
             <groupId>net.liftweb</groupId>
