@@ -10,7 +10,7 @@ class HgRepo(override val cmd:String,
 
   def this(base:String) = this(HgManager.cmd,base)
 
-  def template = """|{node}|{author|user}|{date|shortdate}|{desc}|"""
+  def template = """{node}\n{author|user}\n{date|shortdate}\n{desc\firstline}\n"""
 
   override def toString = base
 
@@ -21,6 +21,7 @@ class HgRepo(override val cmd:String,
       case 2 => IoHelpers.exec(cmd, "log", "--template", template, "-R", base, "-r", changesets(0) + ":" + changesets(1))
     }
     // TODO There must be a cleaner way to get the output
+
     HgLogParser.parse(output.productElement(0).asInstanceOf[String])
   }
 
@@ -28,17 +29,18 @@ class HgRepo(override val cmd:String,
 
     def parse(s:String) : List[LogEntry] = parseAll(entries, s) match {
       case Success(x,s) => x
-      case failure => List()
+      // TODO There must be a way to do this on a token by token basis
+      case failure => throw new RuntimeException("Could not parse log entries: " + s)
     }
 
     def entries : Parser[List[LogEntry]] = rep(entry)
 
-    def entry : Parser[LogEntry] = "|"~hash~"|"~author~"|"~date~"|"~desc~"|" ^^
-      {case x~hash~y~author~z~date~p~desc~u => LogEntry(hash,author,date,desc)}
+    def entry : Parser[LogEntry] = hash~author~date~desc ^^
+      {case hash~author~date~desc => LogEntry(hash,author,date,desc)}
 
-    def author = """[a-z0-9]+""".r
-    def hash   = """[a-z0-9]+""".r
+    def author = """(.)+""".r
+    def desc   = """(.)+""".r
+    def hash   = """[a-z0-9]{40,40}""".r
     def date   = """[0-9]{4,4}-[0-9]{2,2}-[0-9]{2,2}""".r
-    def desc   = """[a-z0-9-]+""".r
   }
 }

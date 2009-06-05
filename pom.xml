@@ -27,6 +27,7 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
@@ -50,7 +51,15 @@
             <groupId>org.scalaforge</groupId>
             <artifactId>scalax</artifactId>
             <version>0.1</version>
+            <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.scala-tools.testing</groupId>
+            <artifactId>scalacheck</artifactId>
+            <version>1.5</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
 

@@ -1,14 +1,43 @@
 package vcs.repo.hg
 
+import collection.mutable.{ListBuffer, Buffer}
 import java.io.File
 import java.util.UUID
+import java.util.Random
 import org.junit.Assert._
 import org.junit.{After, Before, Test}
 import scalax.io.Implicits._
 import scalax.data.Implicits._
 import Stopwatch._
+import org.scalacheck._
 
 class HgTest {
+
+  /**
+   * Very crude random vocabulary that only uses ASCII chars
+   */
+  val vocabulary = {
+    val chars = List.range(1,127)
+    val symbols = Gen.elements(chars.map(x=>(x+'\0').toChar.toString) : _*)
+    val numberOfWords = 100
+    var words = new ListBuffer[String]()
+
+    def buildWord = {
+      val rand = new Random()
+      val next = rand.nextInt(10) + 1
+      var word = ""
+      for (y <- 1 to next) {
+        word += symbols.sample.get
+      }
+      word
+    }
+
+    for (x <- 1 to numberOfWords) {
+      words += buildWord
+    }
+
+    Gen.elements(words : _*)
+  }
 
   val testDir = new File("target/" + randomName)
 
@@ -23,15 +52,25 @@ class HgTest {
   def writeRandomFile(repo:Repo) = {
     val fileName = repo.base + "/" + randomName + ".txt"
     for (writer <- fileName.toFile.writer; line <- 1 to 10) {
-      writer.write(line + "\n")
+      writer.write(randomLine(10) + "\n")
     }
     fileName
   }
 
+  def randomLine(words:Int) = {
+    var line = new ListBuffer[String]()
+    var rand = new Random()
+    for (x <- 1 to words) {
+      line += vocabulary.sample.get
+    }
+    line.mkString(" ")
+   }
+
+
   def addAndCommitFile(repo:Repo) = {
     val file = writeRandomFile(repo)
     repo.add(file)
-    repo.commit(randomName)
+    repo.commit(randomLine(20))
   }
 
   def logLastAndPartial(repo:Repo,fullLog:List[LogEntry]) = {
@@ -52,7 +91,7 @@ class HgTest {
 
   @Test
   def simpleTest() = {
-    val changesets = 20
+    val changesets = 2
 
     val repo = HgManager.init(testDir.getPath)
     for (i <- 1 to changesets) {
@@ -71,7 +110,7 @@ object Benchmark extends HgTest {
   def main(args: Array[String]) {
     val repo = new HgRepo(args(0))
     val fullLog = printTime(() => repo.log(), "Full log")
-    println(fullLog)
+    println(fullLog.size)
     logLastAndPartial(repo,fullLog)    
   }
 }
