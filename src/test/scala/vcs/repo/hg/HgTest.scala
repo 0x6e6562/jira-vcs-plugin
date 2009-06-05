@@ -1,16 +1,24 @@
 package vcs.repo.hg
 
+import java.io.File
 import java.util.UUID
-import org.junit.Test
 import org.junit.Assert._
+import org.junit.{After, Before, Test}
 import scalax.io.Implicits._
 import scalax.data.Implicits._
 import Stopwatch._
 
 class HgTest {
 
+  val testDir = new File("target/" + randomName)
+
   def randomName = UUID.randomUUID.toString
-  def randomDir = "/tmp/delete_me_456/" + randomName
+
+  @Before
+  def createTestDir : Unit = testDir.mkdirs
+
+  @After
+  def deleteTestDir : Unit = testDir.deleteRecursively
 
   def writeRandomFile(repo:Repo) = {
     val fileName = repo.base + "/" + randomName + ".txt"
@@ -46,7 +54,7 @@ class HgTest {
   def simpleTest() = {
     val changesets = 20
 
-    val repo = HgManager.init(randomDir)
+    val repo = HgManager.init(testDir.getPath)
     for (i <- 1 to changesets) {
       addAndCommitFile(repo)
     }
