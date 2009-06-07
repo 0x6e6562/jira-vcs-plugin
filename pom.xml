@@ -21,9 +21,9 @@
     <properties>
         <scala.version>2.7.5</scala.version>
         <atlassian.plugin.key>vcs.jira-vcs-plugin</atlassian.plugin.key>
-        <atlassian.product.version>3.13.4</atlassian.product.version>
-        <atlassian.product.test-lib.version>3.13.4</atlassian.product.test-lib.version>
-        <atlassian.product.data.version>3.13.4</atlassian.product.data.version>
+        <atlassian.product.version>3.13.2</atlassian.product.version>
+        <atlassian.product.test-lib.version>3.13.2</atlassian.product.test-lib.version>
+        <atlassian.product.data.version>3.13.2</atlassian.product.data.version>
     </properties>
 
     <dependencies>
@@ -37,6 +37,11 @@
             <groupId>net.liftweb</groupId>
             <artifactId>lift-util</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.scala-tools</groupId>
+            <artifactId>javautils</artifactId>
+            <version>2.7.4-0.2-SNAPSHOT</version>
         </dependency>
 
         <!-- Testing -->

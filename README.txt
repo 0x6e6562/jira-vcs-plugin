@@ -1,14 +1,19 @@
-You have successfully created a plugin using the JIRA plugin archetype. What to do now:
+HOW TO BUILD THE PLUGIN
 
-1. CUSTOMISE THE PLUGIN
+ATM the POM has this dependency
 
-- Run 'mvn eclipse:eclipse' to generate an Eclipse project file.
-- Edit pom.xml. Add information about your project, its developers and your organisation.
-- Add dependencies as necessary
-- Edit the plugin descriptor, src/main/resources/atlassian-plugin.xml. Add or modify plugin modules in your project.
-- Edit the plugin code in src/main/java/ or the unit tests in src/test/java/.
+<dependency>
+   <groupId>org.scala-tools</groupId>
+   <artifactId>javautils</artifactId>
+   <version>2.7.4-0.2-SNAPSHOT</version>
+</dependency>
 
-2. BUILD THE PLUGIN
+which is not published to any public repo. The easiest way to get this is
+to check it out and install it in to your own local repo. It's a github project
+so just clone it from here:
+
+git://github.com/jorgeortiz85/scala-javautils.git
+
 
 Building with your plugin with Maven is really easy:
 
@@ -27,11 +32,6 @@ XML data that is usually imported into the JIRA instance by the tests should be 
 
     src/test/xml/ directory provided
     
-Packages containing integration tests should start with it. For instance:
-    it.com.atlassian.jira.plugins.fisheye.TestSomething
-    it.com.atlassian.jira.plugins.calendar.TestSomethingElse
-
-Hence these classes should go under src/test/java/it/directory
 
 The following system properties are available to control the behaviour of the integration test harness:
 
@@ -49,6 +49,3 @@ The following system properties are available to control the behaviour of the in
 		
 		jira.url - base URL for this instance of JIRA. Default: http://localhost:{http.port}/jira/
 		rmi.port
-
- 
-Please remove this file before releasing your plugin.

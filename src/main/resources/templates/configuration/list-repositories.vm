@@ -1,0 +1,41 @@
+#set($repositories = $action.listRepositories())
+
+<h1>List of repositories</h1>
+
+#if ($repositories.size() == 0)
+<p>No repos configured :-)</p>
+#else
+    <table>
+        <thead>
+            <td>Repo Id</td>
+            <td>Repo Path</td>
+        </thead>
+    #foreach ($repo in $repositories)
+        <tr>
+            <td>$repo.id</td>
+            <td>$repo</td>
+
+            <td>
+                <form onsubmit="if (this.submitted) return false; this.submitted = true; return true"
+                      name="jiraform"
+                      method="post"
+                      action="DeleteVcsRepository.jspa">
+                    <input type="hidden" name="repoId" value="$repo.id" />
+                    <input type="submit" name="delete" value="Delete This Repo"/>
+                </form>
+            </td>
+        </tr>
+    #end
+    </table>
+#end
+
+
+<p>
+    <img width="8" height="8" border="0" src="/jira/images/icons/bullet_creme.gif"/>
+    <a href="AddVcsRepository!default.jspa"><b>Add new repo</b></a>
+</p>
+
+
+<p>
+    Please be aware that this is all quite rough ATM.....no validation, no confirmation on delete, etc
+</p>

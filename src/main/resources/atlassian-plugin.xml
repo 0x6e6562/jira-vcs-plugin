@@ -1,10 +1,38 @@
 <atlassian-plugin key="${project.groupId}.${project.artifactId}" name="${project.name}">
+
     <plugin-info>
         <description>${project.description}</description>
         <version>${project.version}</version>
-        <!-- TODO: Add vendor details -->
-        <!--
-        <vendor name="Example Company" url="http://www.example.com"/>
-        -->
     </plugin-info>
+
+    <component key="repositoryList" name="repositoryList" class="vcs.configuration.RepositoriesManager">
+        <interface>vcs.configuration.RepositoryList</interface>
+    </component>
+
+    <web-item key="vcs-repositories-link" name="VCS repositories link on administrators page"
+              section="system.admin/globalsettings" weight="95">
+        <label key="Repositories" />
+        <condition class="com.atlassian.jira.plugin.webfragment.conditions.JiraGlobalPermissionCondition">
+            <param name="permission">admin</param>
+        </condition>
+        <link linkId="vcs-repositories">/secure/ListVcsRepositories.jspa</link>
+    </web-item>
+
+    <webwork1 key="VcsRepositoriesManagement" name="VCS repositories management" class="java.lang.Object">
+        <actions>
+            <action name="vcs.configuration.action.VcsActionSupport"
+                    alias="ListVcsRepositories">
+                <view name="success">/templates/configuration/list-repositories.vm</view>
+            </action>
+            <action name="vcs.configuration.action.VcsAddActionSupport"
+                    alias="AddVcsRepository">
+                <view name="input">/templates/configuration/add-repository.vm</view>
+            </action>
+            <action name="vcs.configuration.action.VcsDeleteActionSupport"
+                    alias="DeleteVcsRepository">
+                <view name="input">/templates/configuration/list-repositories.vm</view>
+            </action>
+        </actions>
+    </webwork1>
+
 </atlassian-plugin>
