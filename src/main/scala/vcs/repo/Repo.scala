@@ -1,6 +1,7 @@
 package vcs.repo
 
 
+import java.io.File
 import reflect.BeanProperty
 
 /**
@@ -24,6 +25,12 @@ trait Repo {
    * Create a new repository in the given location
    */
   def add(path:String) : Unit
+  def add(path:File) : Unit
+
+  /**
+   * Creates a new branch
+   */
+  def branch(name:String) : Unit
 
   /**
    * Commits the current working directory to the index
@@ -33,6 +40,6 @@ trait Repo {
   /**
    * Reads the log from the repo
    */
-  def log(changesets:String*) : List[LogEntry]
+  def log(changesets:String*) : List[ChangeSet]
 
 }

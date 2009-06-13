@@ -9,6 +9,9 @@
         <interface>vcs.configuration.RepositoryList</interface>
     </component>
 
+    <component key="changeSetLinker" class="vcs.linking.ChangeSetLinker"/>
+    <component key="trawlingBooter" name="trawlingBooter" class="vcs.linking.TrawlingBooter"/>
+
     <web-item key="vcs-repositories-link" name="VCS repositories link on administrators page"
               section="system.admin/globalsettings" weight="95">
         <label key="Repositories" />

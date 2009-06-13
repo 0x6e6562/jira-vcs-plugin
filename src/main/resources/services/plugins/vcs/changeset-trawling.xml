@@ -1,0 +1,5 @@
+<changesservice id="vcs-changeset-trawlingservice">
+    <description>System service that trawls through VCS changesets</description>
+    <properties>
+    </properties>
+</changesservice>

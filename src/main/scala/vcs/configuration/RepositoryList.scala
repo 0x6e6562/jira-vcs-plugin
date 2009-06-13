@@ -9,6 +9,8 @@ import com.atlassian.jira.propertyset.JiraPropertySetFactory
 import com.atlassian.jira.security.PermissionManager
 import com.atlassian.jira.service.ServiceManager
 import com.opensymphony.module.propertyset.PropertySet
+import linking.{TrawlingService, ChangeSetLinker}
+import org.apache.log4j.Logger
 import repo.hg.HgRepo
 import repo.Repo
 
@@ -32,14 +34,9 @@ object RepositoryAttributes {
   val BASE = "plugins.vcs.base"
 }
 
-class RepositoriesManager(val applicationProperties:ApplicationProperties,
-                          val versionManager:VersionManager,
-                          val issueManager:IssueManager,
-                          val permissionManager:PermissionManager,
-                          val changeHistoryManager:ChangeHistoryManager,
-                          val jiraPropertySetFactory:JiraPropertySetFactory,
-                          val serviceManager:ServiceManager)
-        extends RepositoryList {
+class RepositoriesManager(val jiraPropertySetFactory:JiraPropertySetFactory) extends RepositoryList {
+
+  val log = Logger.getLogger(getClass)
 
   var repositories: SortedMap[Long, PropertySet] = new TreeMap()
 

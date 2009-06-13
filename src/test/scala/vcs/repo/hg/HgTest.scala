@@ -10,6 +10,7 @@ import scalax.io.Implicits._
 import scalax.data.Implicits._
 import Stopwatch._
 import org.scalacheck._
+import vcs.common.QAUtils._
 
 class HgTest {
 
@@ -39,9 +40,7 @@ class HgTest {
     Gen.elements(words : _*)
   }
 
-  val testDir = new File("target/" + randomName)
-
-  def randomName = UUID.randomUUID.toString
+  val testDir = new File("target/unit_test_dirs/" + randomName)
 
   @Before
   def createTestDir : Unit = testDir.mkdirs
@@ -73,7 +72,7 @@ class HgTest {
     repo.commit(randomLine(20))
   }
 
-  def logLastAndPartial(repo:Repo,fullLog:List[LogEntry]) = {
+  def logLastAndPartial(repo:Repo,fullLog:List[ChangeSet]) = {
     val changesets = fullLog.size
     val index1 = changesets / 2
     val hash1 = fullLog(index1).hash
@@ -87,6 +86,18 @@ class HgTest {
     val partialLog = printTime(() => repo.log(hash1,hash2), "Partial log")
 
     assertEquals(index1 - index2 + 1, partialLog.size)
+  }
+
+  @Test
+  def branchTest = {
+    val branch = randomName
+    val repo = HgManager.init(testDir.getPath)
+    addAndCommitFile(repo)
+    repo.branch(branch)
+    addAndCommitFile(repo)
+    val changesets = repo.log()
+    assertEquals(2,changesets.size)
+    assertEquals(changesets(0).branch,branch)    
   }
 
   @Test
