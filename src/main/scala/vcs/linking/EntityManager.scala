@@ -2,6 +2,7 @@ package vcs.linking
 
 
 import com.atlassian.jira.ComponentManager
+import com.atlassian.jira.issue.Issue
 import java.sql.Timestamp
 import java.util.Date
 import org.joda.time.DateTime
@@ -27,6 +28,11 @@ object EntityManager {
 
   val ofBizDelegator:DelegatorInterface =
     ComponentManager.getComponentInstanceOfType(classOf[DelegatorInterface]).asInstanceOf[DelegatorInterface];
+
+  def changeSetsByIssue(issue:Issue) = {
+    val changeSets = ofBizDelegator.findByAnd(CHANGESET, Map(ISSUE -> issue.getId).asJava).asInstanceOf[java.util.List[GenericValue]]
+    changeSets.asScala.map(toChangeSet)
+  }
 
   def nextChangeSetSequence = ofBizDelegator.getNextSeqId(CHANGESET)
 

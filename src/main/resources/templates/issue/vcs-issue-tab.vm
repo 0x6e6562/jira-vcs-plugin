@@ -1,0 +1,22 @@
+<table cellpadding="2" cellspacing="0" border="0" width="100%">
+
+<tr>
+    <td bgcolor="#f0f0f0" width="10%"><b>$i18n.getText("vcs.issue-tab.repository")</b></td>
+    <td bgcolor="#f0f0f0" width="10%"><b>$i18n.getText("vcs.issue-tab.revision")</b></td>
+    <td bgcolor="#f0f0f0" width="10%"><b>$i18n.getText("vcs.issue-tab.date")</b></td>
+    <td bgcolor="#f0f0f0" width="10%"><b>$i18n.getText("vcs.issue-tab.user")</b></td>
+    <td bgcolor="#f0f0f0"><b>$i18n.getText("vcs.issue-tab.message")</b></td>
+</tr>
+<tr>
+    <td bgcolor="#ffffff" width="10%" valign="top" rowspan="3">Repo Name</td>
+    <td bgcolor="#ffffff" width="10%" valign="top" rowspan="3">Changeset Id</td>
+    <td bgcolor="#ffffff" width="10%" valign="top" rowspan="3">Date</td>
+    <td bgcolor="#ffffff" width="10%" valign="top" rowspan="3">Author</td>
+
+</tr>
+<tr>
+    <td bgcolor="#f0f0f0"><b>$i18n.getText("vcs.issue-tab.files-changed")</b></td>
+</tr>
+<tr>
+    
+</table>
